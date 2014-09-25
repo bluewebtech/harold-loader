@@ -80,7 +80,7 @@
         });
 
         /**
-         * Progress loader.
+         * Harold inializer.
         */
         init = function(selector)
         {
@@ -91,7 +91,7 @@
             $(selector).click(function() {
                 var href = $(this).attr('href');
 
-                $('.harold-loader').stop().animate({width: $(window).width()}, fadeSpeed).fadeOut(fadeSpeed, function() {
+                $(loader).stop().animate({width: $(window).width()}, fadeSpeed).fadeOut(fadeSpeed, function() {
                     window.location.href = href;
                 });
             });

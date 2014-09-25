@@ -2,7 +2,7 @@ $(function() {
 
     $('a').harold({
         background: '#00C8FF',
-        loader: '.harold-loader',
+        loader: '.harold',
         padding: 2
     });
 
