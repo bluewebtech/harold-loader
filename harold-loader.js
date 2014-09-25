@@ -2,15 +2,19 @@
  * Plugin: Harold Loader
  * Author: Peter Morrison
  * Created: 2014-09-24
- * Updated: Not yet
+ * Updated: 2014-09-25
  * Version: 0.1.0
 */
-(function($) {
 
-    $.fn.loader = function(options) {
+(function($) 
+{
 
-        // Plugin defaults.
-        var defaults = {
+    $.fn.harold = function(options) 
+    {
+
+        // Plugin defaults
+        var defaults = 
+        {
             background: '#44AEE3', 
             fadeSpeed: 200,
             left: 0,
@@ -23,61 +27,74 @@
         };
 
         // Plugin settings.
-        var settings = $.extend({
+        var settings = $.extend(
+        {
             background: defaults.background,
             fadeSpeed: defaults.fadeSpeed,
             left: defaults.left,
             loader: defaults.loader,
             padding: defaults.padding,
             position: defaults.position,
-            title: $('title').text(), 
             top: defaults.top,
             width: defaults.width
         }, options);
 
-        // Set the CSS styling of the loader.
-        $(settings.loader).css({
-            background: settings.background,
-            left: settings.left, 
-            padding: settings.padding,
-            position: settings.position,
-            top: settings.top
-        });
+        // Progress bar CSS background.
+        var background = settings.background;
 
+        // Progress bar and content fade in speed.
+        var fadeSpeed = settings.fadeSpeed;
+
+        // Progress bar CSS spacing from left of window.
+        var left = settings.left;
+
+        // Progress bar element identifier, class or id.
+        var loader = settings.loader;
+
+        // Progress bar CSS padding.
+        var padding = settings.padding;
+
+        // Progress bar CSS position.
+        var position = settings.position;
+
+        // Progress bar CSS spacing from top of window.
+        var top = settings.top;
+
+        // Progress bar load to window width.
+        var width = settings.width;
+
+        // Content element class or id selector.
         var selector = this.selector;
+
+        // Set the CSS styling of the loader.
+        $(loader).css(
+        {
+            'background': background,
+            'left': left, 
+            'padding-top': padding,
+            'padding-right': 0,
+            'padding-bottom': padding,
+            'padding-left': 0,
+            'position': position,
+            'top': top
+        });
 
         /**
          * Progress loader.
         */
-        loader = function(selector)
-        {
-            // Hide the specified content by default.
-            $(selector).hide();
-
-            // Run the loader animation.
-            $(settings.loader).stop().animate({
-                width: settings.width
-            }).fadeOut(settings.fadeSpeed);
-        },
-
-        /**
-         * Content loader.
-         * 
-         * var string selector
-        */
-        content = function(selector)
-        {
-            $(selector).animate({opacity: 1.0}).fadeIn(settings.fadeSpeed);
-        },
-
-        /**
-         * Progress loader initializer.
-         * 
-         * var string selector
-        */
         init = function(selector)
         {
-            $.when(loader(selector)).then(content(selector));
+            $(selector).click(function(event) {
+                event.preventDefault();
+            });
+
+            $(selector).click(function() {
+                var href = $(this).attr('href');
+
+                $('.harold-loader').stop().animate({width: $(window).width()}, fadeSpeed).fadeOut(fadeSpeed, function() {
+                    window.location.href = href;
+                });
+            });
         }
 
         // Initialize the progress loader.
